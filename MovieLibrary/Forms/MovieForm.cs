@@ -30,6 +30,7 @@ namespace MovieLibrary
         AddFavouriteForm addFavouriteForm;
         AddWatchListForm addWatchListForm;
         DetailsForm detailsForm;
+        TrailerForm trailerForm;
 
         private MoviePreview selectedDataRow;
         public MoviePreview SelectedDataRow
@@ -108,5 +109,19 @@ namespace MovieLibrary
             }
         }
 
+        
+        private async void trailerBtn_Click(object sender, EventArgs e)
+        {
+            if (selectedDataRow != null && (trailerForm == null || trailerForm.IsDisposed))
+            {
+                trailerForm = new TrailerForm(selectedDataRow.Title,selectedDataRow.Year);
+                trailerForm.Show();
+            }
+            else
+            {
+               await trailerForm.Search(selectedDataRow.Title, selectedDataRow.Year);
+            }
     }
+
+}
 }

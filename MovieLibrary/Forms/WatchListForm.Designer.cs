@@ -38,7 +38,9 @@
             this.WatchListElementId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.imdbRating = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Notes = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.imdbId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.excelBtn = new DevExpress.XtraEditors.SimpleButton();
             this.pictureBox = new DevExpress.XtraEditors.PictureEdit();
             this.dateLabel = new DevExpress.XtraEditors.LabelControl();
             this.detailsBtn = new DevExpress.XtraEditors.SimpleButton();
@@ -49,8 +51,7 @@
             this.notesText = new System.Windows.Forms.RichTextBox();
             this.deleteBtn = new DevExpress.XtraEditors.SimpleButton();
             this.updateBtn = new DevExpress.XtraEditors.SimpleButton();
-            this.imdbId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.excelBtn = new DevExpress.XtraEditors.SimpleButton();
+            this.favBtn = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.watchListControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
@@ -149,8 +150,14 @@
             this.Notes.FieldName = "Notes";
             this.Notes.Name = "Notes";
             // 
+            // imdbId
+            // 
+            this.imdbId.FieldName = "imdbId";
+            this.imdbId.Name = "imdbId";
+            // 
             // groupControl1
             // 
+            this.groupControl1.Controls.Add(this.favBtn);
             this.groupControl1.Controls.Add(this.excelBtn);
             this.groupControl1.Controls.Add(this.pictureBox);
             this.groupControl1.Controls.Add(this.dateLabel);
@@ -168,6 +175,15 @@
             this.groupControl1.ShowCaption = false;
             this.groupControl1.Size = new System.Drawing.Size(271, 670);
             this.groupControl1.TabIndex = 1;
+            // 
+            // excelBtn
+            // 
+            this.excelBtn.Location = new System.Drawing.Point(26, 16);
+            this.excelBtn.Name = "excelBtn";
+            this.excelBtn.Size = new System.Drawing.Size(94, 29);
+            this.excelBtn.TabIndex = 28;
+            this.excelBtn.Text = "Export Excel";
+            this.excelBtn.Click += new System.EventHandler(this.excelBtn_Click);
             // 
             // pictureBox
             // 
@@ -263,19 +279,14 @@
             this.updateBtn.Text = "Update";
             this.updateBtn.Click += new System.EventHandler(this.updateBtn_Click);
             // 
-            // imdbId
+            // favBtn
             // 
-            this.imdbId.FieldName = "imdbId";
-            this.imdbId.Name = "imdbId";
-            // 
-            // excelBtn
-            // 
-            this.excelBtn.Location = new System.Drawing.Point(26, 16);
-            this.excelBtn.Name = "excelBtn";
-            this.excelBtn.Size = new System.Drawing.Size(94, 29);
-            this.excelBtn.TabIndex = 28;
-            this.excelBtn.Text = "Export Excel";
-            this.excelBtn.Click += new System.EventHandler(this.excelBtn_Click);
+            this.favBtn.Location = new System.Drawing.Point(155, 378);
+            this.favBtn.Name = "favBtn";
+            this.favBtn.Size = new System.Drawing.Size(94, 29);
+            this.favBtn.TabIndex = 29;
+            this.favBtn.Text = "Add To Favs";
+            this.favBtn.Click += new System.EventHandler(this.favBtn_Click);
             // 
             // WatchListForm
             // 
@@ -327,5 +338,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn Notes;
         private DevExpress.XtraGrid.Columns.GridColumn imdbId;
         private DevExpress.XtraEditors.SimpleButton excelBtn;
+        private DevExpress.XtraEditors.SimpleButton favBtn;
     }
 }

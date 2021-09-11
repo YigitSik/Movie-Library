@@ -48,6 +48,7 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.detailsBtn = new DevExpress.XtraEditors.SimpleButton();
+            this.trailerBtn = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.searchBox.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MovieGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
@@ -197,6 +198,7 @@
             // 
             // groupControl1
             // 
+            this.groupControl1.Controls.Add(this.trailerBtn);
             this.groupControl1.Controls.Add(this.detailsBtn);
             this.groupControl1.Controls.Add(this.favouritesBtn);
             this.groupControl1.Controls.Add(this.pictureEdit1);
@@ -211,13 +213,23 @@
             // 
             // detailsBtn
             // 
-            this.detailsBtn.Location = new System.Drawing.Point(121, 5);
+            this.detailsBtn.Location = new System.Drawing.Point(180, 13);
             this.detailsBtn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.detailsBtn.Name = "detailsBtn";
             this.detailsBtn.Size = new System.Drawing.Size(93, 31);
             this.detailsBtn.TabIndex = 9;
             this.detailsBtn.Text = "Details";
             this.detailsBtn.Click += new System.EventHandler(this.detailsBtn_Click);
+            // 
+            // trailerBtn
+            // 
+            this.trailerBtn.Location = new System.Drawing.Point(62, 13);
+            this.trailerBtn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trailerBtn.Name = "trailerBtn";
+            this.trailerBtn.Size = new System.Drawing.Size(93, 31);
+            this.trailerBtn.TabIndex = 10;
+            this.trailerBtn.Text = "Trailer";
+            this.trailerBtn.Click += new System.EventHandler(this.trailerBtn_Click);
             // 
             // MovieForm
             // 
@@ -266,6 +278,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colType;
         private DevExpress.XtraGrid.Columns.GridColumn colimdbID;
         private DevExpress.XtraGrid.Columns.GridColumn colPoster;
+        private DevExpress.XtraEditors.SimpleButton trailerBtn;
     }
 }
 

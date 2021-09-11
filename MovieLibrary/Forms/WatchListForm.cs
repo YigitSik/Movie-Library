@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using MovieLibrary.Utils;
 using MovieLibrary.Model;
 using System.Diagnostics;
+using MovieLibrary.Forms;
 
 namespace MovieLibrary
 {
@@ -24,6 +25,7 @@ namespace MovieLibrary
 
         MovieLibraryEntities1 movieLibrary = new MovieLibraryEntities1();
         DetailsForm detailsForm;
+        AddFavouriteForm addFavouriteForm;
         
         dynamic selectedRow;
 
@@ -117,12 +119,7 @@ namespace MovieLibrary
                 detailsForm = new DetailsForm(id);
                 detailsForm.Show();
             }
-
-
-
-            string path = "output.xlsx";
-            watchListControl.ExportToXlsx(path);
-            Process.Start(path);
+            
         }
 
         private void WatchListForm_Activated(object sender, EventArgs e)
@@ -135,6 +132,24 @@ namespace MovieLibrary
             string path = "output.xlsx";
             watchListControl.ExportToXlsx(path);
             Process.Start(path);
+        }
+
+        private void favBtn_Click(object sender, EventArgs e)
+        {
+
+            MoviePreview moviePreview = new MoviePreview();
+
+            moviePreview.imdbID = selectedRow.imdbId;
+            moviePreview.Poster = selectedRow.Poster;
+            moviePreview.Title = selectedRow.Title;
+            moviePreview.Year = selectedRow.Year;
+    
+            
+            if (selectedRow != null && (addFavouriteForm == null || addFavouriteForm.IsDisposed))
+            {
+                addFavouriteForm = new AddFavouriteForm(moviePreview);
+                addFavouriteForm.Show();
+            }
         }
     }
 }

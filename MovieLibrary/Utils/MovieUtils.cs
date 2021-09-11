@@ -25,8 +25,8 @@ namespace MovieLibrary.Utils
             }
             catch (Exception)
             {
-                //return Image.FromFile("blank.jpg");
-                return null;
+                return Image.FromFile(@"Resources\\empty.png");
+
             }
 
         }
