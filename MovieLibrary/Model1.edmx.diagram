@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="43c611788c1d4db39ccf8a8b6db09218" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="MovieLibraryModel.TBL_FAVOURITE" Width="1.5" PointX="3.375" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieLibraryModel.TBL_MOVIE" Width="2" PointX="0.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieLibraryModel.TBL_MOVIEPREVIEW" Width="1.75" PointX="6" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieLibraryModel.TBL_WATCHLIST" Width="1.625" PointX="7.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieLibraryModel.TBL_WATCHLIST_ELEMENT" Width="2.125" PointX="4" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="MovieLibraryModel.FK_TBL_FAVOURITE_TBL_MOVIE" ManuallyRouted="false" />
+        <AssociationConnector Association="MovieLibraryModel.FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE" ManuallyRouted="false" />
+        <AssociationConnector Association="MovieLibraryModel.FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

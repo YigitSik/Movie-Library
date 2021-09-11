@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MovieLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBL_FAVOURITE">
+          <Key>
+            <PropertyRef Name="FavId" />
+          </Key>
+          <Property Name="FavId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonalRating" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Notes" Type="text" />
+          <Property Name="imdbId" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_MOVIE">
+          <Key>
+            <PropertyRef Name="imdbId" />
+          </Key>
+          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="Rated" Type="varchar" MaxLength="50" />
+          <Property Name="Released" Type="varchar" MaxLength="50" />
+          <Property Name="Runtime" Type="varchar" MaxLength="100" />
+          <Property Name="Genre" Type="varchar" MaxLength="100" />
+          <Property Name="Director" Type="varchar" MaxLength="200" />
+          <Property Name="Writer" Type="varchar" MaxLength="100" />
+          <Property Name="Actors" Type="varchar" MaxLength="200" />
+          <Property Name="Plot" Type="text" />
+          <Property Name="Language" Type="varchar" MaxLength="100" />
+          <Property Name="Country" Type="varchar" MaxLength="100" />
+          <Property Name="Awards" Type="varchar" MaxLength="200" />
+          <Property Name="Poster" Type="text" />
+          <Property Name="Metascore" Type="varchar" MaxLength="50" />
+          <Property Name="imdbRating" Type="varchar" MaxLength="50" />
+          <Property Name="imdbVotes" Type="varchar" MaxLength="200" />
+          <Property Name="imdbId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="100" />
+          <Property Name="DVD" Type="varchar" MaxLength="100" />
+          <Property Name="BoxOffice" Type="varchar" MaxLength="200" />
+          <Property Name="Production" Type="varchar" MaxLength="200" />
+          <Property Name="Website" Type="varchar" MaxLength="200" />
+          <Property Name="Response" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TBL_MOVIEPREVIEW">
+          <Key>
+            <PropertyRef Name="imdbID" />
+          </Key>
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="imdbID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
+          <Property Name="Poster" Type="text" />
+          <Property Name="id" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_WATCHLIST">
+          <Key>
+            <PropertyRef Name="WatchListName" />
+          </Key>
+          <Property Name="WatchListId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WatchListName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_WATCHLIST_ELEMENT">
+          <Key>
+            <PropertyRef Name="WatchListElementId" />
+          </Key>
+          <Property Name="WatchListName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="imdbId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime2" Precision="7" />
+          <Property Name="Notes" Type="text" />
+          <Property Name="WatchListElementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TBL_FAVOURITE_TBL_MOVIE">
+          <End Role="TBL_MOVIE" Type="Self.TBL_MOVIE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TBL_FAVOURITE" Type="Self.TBL_FAVOURITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_MOVIE">
+              <PropertyRef Name="imdbId" />
+            </Principal>
+            <Dependent Role="TBL_FAVOURITE">
+              <PropertyRef Name="imdbId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE">
+          <End Role="TBL_MOVIE" Type="Self.TBL_MOVIE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TBL_WATCHLIST_ELEMENT" Type="Self.TBL_WATCHLIST_ELEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_MOVIE">
+              <PropertyRef Name="imdbId" />
+            </Principal>
+            <Dependent Role="TBL_WATCHLIST_ELEMENT">
+              <PropertyRef Name="imdbId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST">
+          <End Role="TBL_WATCHLIST" Type="Self.TBL_WATCHLIST" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TBL_WATCHLIST_ELEMENT" Type="Self.TBL_WATCHLIST_ELEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_WATCHLIST">
+              <PropertyRef Name="WatchListName" />
+            </Principal>
+            <Dependent Role="TBL_WATCHLIST_ELEMENT">
+              <PropertyRef Name="WatchListName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovieLibraryModelStoreContainer">
+          <EntitySet Name="TBL_FAVOURITE" EntityType="Self.TBL_FAVOURITE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_MOVIE" EntityType="Self.TBL_MOVIE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_MOVIEPREVIEW" EntityType="Self.TBL_MOVIEPREVIEW" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_WATCHLIST" EntityType="Self.TBL_WATCHLIST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_WATCHLIST_ELEMENT" EntityType="Self.TBL_WATCHLIST_ELEMENT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBL_FAVOURITE_TBL_MOVIE" Association="Self.FK_TBL_FAVOURITE_TBL_MOVIE">
+            <End Role="TBL_MOVIE" EntitySet="TBL_MOVIE" />
+            <End Role="TBL_FAVOURITE" EntitySet="TBL_FAVOURITE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE" Association="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE">
+            <End Role="TBL_MOVIE" EntitySet="TBL_MOVIE" />
+            <End Role="TBL_WATCHLIST_ELEMENT" EntitySet="TBL_WATCHLIST_ELEMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST" Association="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST">
+            <End Role="TBL_WATCHLIST" EntitySet="TBL_WATCHLIST" />
+            <End Role="TBL_WATCHLIST_ELEMENT" EntitySet="TBL_WATCHLIST_ELEMENT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MovieLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBL_FAVOURITE">
+          <Key>
+            <PropertyRef Name="FavId" />
+          </Key>
+          <Property Name="FavId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonalRating" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="imdbId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TBL_MOVIE" Relationship="Self.FK_TBL_FAVOURITE_TBL_MOVIE" FromRole="TBL_FAVOURITE" ToRole="TBL_MOVIE" />
+        </EntityType>
+        <EntityType Name="TBL_MOVIE">
+          <Key>
+            <PropertyRef Name="imdbId" />
+          </Key>
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rated" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Released" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Runtime" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Genre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Director" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Writer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Actors" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Plot" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Language" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Awards" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Poster" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Metascore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="imdbRating" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="imdbVotes" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="imdbId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DVD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BoxOffice" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Production" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Response" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_FAVOURITE" Relationship="Self.FK_TBL_FAVOURITE_TBL_MOVIE" FromRole="TBL_MOVIE" ToRole="TBL_FAVOURITE" />
+          <NavigationProperty Name="TBL_WATCHLIST_ELEMENT" Relationship="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE" FromRole="TBL_MOVIE" ToRole="TBL_WATCHLIST_ELEMENT" />
+        </EntityType>
+        <EntityType Name="TBL_MOVIEPREVIEW">
+          <Key>
+            <PropertyRef Name="imdbID" />
+          </Key>
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="imdbID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Poster" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_WATCHLIST">
+          <Key>
+            <PropertyRef Name="WatchListName" />
+          </Key>
+          <Property Name="WatchListId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WatchListName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TBL_WATCHLIST_ELEMENT" Relationship="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST" FromRole="TBL_WATCHLIST" ToRole="TBL_WATCHLIST_ELEMENT" />
+        </EntityType>
+        <EntityType Name="TBL_WATCHLIST_ELEMENT">
+          <Key>
+            <PropertyRef Name="WatchListElementId" />
+          </Key>
+          <Property Name="WatchListName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="imdbId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="7" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WatchListElementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TBL_MOVIE" Relationship="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE" FromRole="TBL_WATCHLIST_ELEMENT" ToRole="TBL_MOVIE" />
+          <NavigationProperty Name="TBL_WATCHLIST" Relationship="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST" FromRole="TBL_WATCHLIST_ELEMENT" ToRole="TBL_WATCHLIST" />
+        </EntityType>
+        <Association Name="FK_TBL_FAVOURITE_TBL_MOVIE">
+          <End Role="TBL_MOVIE" Type="Self.TBL_MOVIE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TBL_FAVOURITE" Type="Self.TBL_FAVOURITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_MOVIE">
+              <PropertyRef Name="imdbId" />
+            </Principal>
+            <Dependent Role="TBL_FAVOURITE">
+              <PropertyRef Name="imdbId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE">
+          <End Role="TBL_MOVIE" Type="Self.TBL_MOVIE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TBL_WATCHLIST_ELEMENT" Type="Self.TBL_WATCHLIST_ELEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_MOVIE">
+              <PropertyRef Name="imdbId" />
+            </Principal>
+            <Dependent Role="TBL_WATCHLIST_ELEMENT">
+              <PropertyRef Name="imdbId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST">
+          <End Role="TBL_WATCHLIST" Type="Self.TBL_WATCHLIST" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TBL_WATCHLIST_ELEMENT" Type="Self.TBL_WATCHLIST_ELEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_WATCHLIST">
+              <PropertyRef Name="WatchListName" />
+            </Principal>
+            <Dependent Role="TBL_WATCHLIST_ELEMENT">
+              <PropertyRef Name="WatchListName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovieLibraryEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_FAVOURITE" EntityType="Self.TBL_FAVOURITE" />
+          <EntitySet Name="TBL_MOVIE" EntityType="Self.TBL_MOVIE" />
+          <EntitySet Name="TBL_MOVIEPREVIEW" EntityType="Self.TBL_MOVIEPREVIEW" />
+          <EntitySet Name="TBL_WATCHLIST" EntityType="Self.TBL_WATCHLIST" />
+          <EntitySet Name="TBL_WATCHLIST_ELEMENT" EntityType="Self.TBL_WATCHLIST_ELEMENT" />
+          <AssociationSet Name="FK_TBL_FAVOURITE_TBL_MOVIE" Association="Self.FK_TBL_FAVOURITE_TBL_MOVIE">
+            <End Role="TBL_MOVIE" EntitySet="TBL_MOVIE" />
+            <End Role="TBL_FAVOURITE" EntitySet="TBL_FAVOURITE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE" Association="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_MOVIE">
+            <End Role="TBL_MOVIE" EntitySet="TBL_MOVIE" />
+            <End Role="TBL_WATCHLIST_ELEMENT" EntitySet="TBL_WATCHLIST_ELEMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST" Association="Self.FK_TBL_WATCHLIST_ELEMENT_TBL_WATCHLIST">
+            <End Role="TBL_WATCHLIST" EntitySet="TBL_WATCHLIST" />
+            <End Role="TBL_WATCHLIST_ELEMENT" EntitySet="TBL_WATCHLIST_ELEMENT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MovieLibraryModelStoreContainer" CdmEntityContainer="MovieLibraryEntities1">
+          <EntitySetMapping Name="TBL_FAVOURITE">
+            <EntityTypeMapping TypeName="MovieLibraryModel.TBL_FAVOURITE">
+              <MappingFragment StoreEntitySet="TBL_FAVOURITE">
+                <ScalarProperty Name="FavId" ColumnName="FavId" />
+                <ScalarProperty Name="PersonalRating" ColumnName="PersonalRating" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="imdbId" ColumnName="imdbId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_MOVIE">
+            <EntityTypeMapping TypeName="MovieLibraryModel.TBL_MOVIE">
+              <MappingFragment StoreEntitySet="TBL_MOVIE">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Rated" ColumnName="Rated" />
+                <ScalarProperty Name="Released" ColumnName="Released" />
+                <ScalarProperty Name="Runtime" ColumnName="Runtime" />
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+                <ScalarProperty Name="Director" ColumnName="Director" />
+                <ScalarProperty Name="Writer" ColumnName="Writer" />
+                <ScalarProperty Name="Actors" ColumnName="Actors" />
+                <ScalarProperty Name="Plot" ColumnName="Plot" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Awards" ColumnName="Awards" />
+                <ScalarProperty Name="Poster" ColumnName="Poster" />
+                <ScalarProperty Name="Metascore" ColumnName="Metascore" />
+                <ScalarProperty Name="imdbRating" ColumnName="imdbRating" />
+                <ScalarProperty Name="imdbVotes" ColumnName="imdbVotes" />
+                <ScalarProperty Name="imdbId" ColumnName="imdbId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="DVD" ColumnName="DVD" />
+                <ScalarProperty Name="BoxOffice" ColumnName="BoxOffice" />
+                <ScalarProperty Name="Production" ColumnName="Production" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_MOVIEPREVIEW">
+            <EntityTypeMapping TypeName="MovieLibraryModel.TBL_MOVIEPREVIEW">
+              <MappingFragment StoreEntitySet="TBL_MOVIEPREVIEW">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="imdbID" ColumnName="imdbID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Poster" ColumnName="Poster" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_WATCHLIST">
+            <EntityTypeMapping TypeName="MovieLibraryModel.TBL_WATCHLIST">
+              <MappingFragment StoreEntitySet="TBL_WATCHLIST">
+                <ScalarProperty Name="WatchListId" ColumnName="WatchListId" />
+                <ScalarProperty Name="WatchListName" ColumnName="WatchListName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_WATCHLIST_ELEMENT">
+            <EntityTypeMapping TypeName="MovieLibraryModel.TBL_WATCHLIST_ELEMENT">
+              <MappingFragment StoreEntitySet="TBL_WATCHLIST_ELEMENT">
+                <ScalarProperty Name="WatchListName" ColumnName="WatchListName" />
+                <ScalarProperty Name="imdbId" ColumnName="imdbId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="WatchListElementId" ColumnName="WatchListElementId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
