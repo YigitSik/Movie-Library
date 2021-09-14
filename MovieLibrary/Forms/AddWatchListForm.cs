@@ -78,11 +78,14 @@ namespace MovieLibrary.Forms
                                movie.imdbId,
                                movie.Poster,
                                movie.imdbRating,
-                               watchList.WatchListId
+                               watchList.WatchListId,
+                               watchList.userId
 
                            };
 
-            watchListControl.DataSource = elements.ToList();
+            var watchlist = elements.Where(e => e.userId == Crud.userId).Select(e => e);
+
+            watchListControl.DataSource = watchlist.ToList();
         }
 
         private async void watchListSubmit_Click(object sender, EventArgs e)

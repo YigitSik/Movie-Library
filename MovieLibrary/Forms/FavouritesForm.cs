@@ -138,7 +138,8 @@ namespace MovieLibrary
         // gridControl'deki verileri excel'e aktar
         private void excelBtn_Click(object sender, EventArgs e)
         {
-            string path = "output.xlsx";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\favourites.xlsx";
+            MessageBox.Show("Saved To Your Desktop");
             gridControl1.ExportToXlsx(path);
             Process.Start(path);
         }

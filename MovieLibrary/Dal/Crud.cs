@@ -137,6 +137,8 @@ namespace MovieLibrary.Dal
 
         public static void Register(string username,string password)
         {
+
+
             try
             {
 
@@ -152,13 +154,13 @@ namespace MovieLibrary.Dal
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
-
+                MessageBox.Show("A Transient Error Has Occurred, Please Try Again In 15 seconds!");
             }
         }
 
         public static IDictionary<string, object> Authenticate(string username,string password)
         {
+
 
             IDictionary<string, object> valuePairs = new Dictionary<string, object>();
             
@@ -189,14 +191,15 @@ namespace MovieLibrary.Dal
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
-                valuePairs.Add("Result", false);
+                MessageBox.Show("A Transient Error Has Occurred, Please Try Again In 15 seconds!");
                 return valuePairs;
             }
             
 
 
         }
+
+
         
     }
 }

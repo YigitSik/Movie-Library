@@ -136,7 +136,8 @@ namespace MovieLibrary
 
         private void excelBtn_Click(object sender, EventArgs e)
         {
-            string path = "output.xlsx";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\watchlist.xlsx";
+            MessageBox.Show("Saved To Your Desktop");
             watchListControl.ExportToXlsx(path);
             Process.Start(path);
         }
