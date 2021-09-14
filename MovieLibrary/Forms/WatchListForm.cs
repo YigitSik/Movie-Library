@@ -38,11 +38,14 @@ namespace MovieLibrary
 
         public void getWatchList()
         {
+            // İlgili sütunlara göre tabloları birleştir 
             var elements = from watchList in movieLibrary.TBL_WATCHLIST
                            join watchListElement in movieLibrary.TBL_WATCHLIST_ELEMENT
                            on watchList.WatchListName equals watchListElement.WatchListName
                            join movie in movieLibrary.TBL_MOVIE
                            on watchListElement.imdbId equals movie.imdbId
+                           join user in movieLibrary.TBL_USER 
+                           on watchList.userId equals user.userId
                            select new
                            {
                                watchListElement.WatchListName,
@@ -55,10 +58,14 @@ namespace MovieLibrary
                                movie.imdbId,
                                movie.imdbRating,
                                movie.Poster,
-                               watchList.WatchListId
+                               watchList.WatchListId,
+                               watchList.userId
                            };
 
-            watchListControl.DataSource = elements.ToList();
+            // ilgili kullanıcıya göre filtrele
+            var watchlist = elements.Where(e => e.userId == Crud.userId).Select(e => e);
+
+            watchListControl.DataSource = watchlist.ToList();
         }
 
         private void gridView1_FocusedRowChanged_1(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)

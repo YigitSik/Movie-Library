@@ -1,4 +1,4 @@
-﻿using MovieLibrary.Utils;
+﻿using MovieLibrary.Dal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,29 +17,60 @@ namespace MovieLibrary.Forms
         {
             InitializeComponent();
         }
-        
-        private void userBtnOne_Click(object sender, EventArgs e)
+
+        RegisterForm registerForm;
+
+        public string username { get; set; }
+
+        public string password { get; set; }
+
+        private void submitBtn_Click(object sender, EventArgs e)
         {
-            UserSelector.SelectedUser = 1;
-            this.Close();
+            
+            IDictionary<string,object> response = Crud.Authenticate(username, password);
+
+            if (Convert.ToBoolean(response["Result"])==true)
+            {
+                Hide();
+                MainForm mainForm = new MainForm();
+                mainForm.Show();
+                
+            }
+            else
+            {
+                MessageBox.Show("Invalid Credentials");
+            }
+            
         }
 
-        private void userBtnTwo_Click(object sender, EventArgs e)
+        private void registerBtn_Click(object sender, EventArgs e)
         {
-            UserSelector.SelectedUser = 2;
-            this.Close();
+            if (registerForm==null||registerForm.IsDisposed)
+            {
+                registerForm = new RegisterForm();
+                registerForm.Show();
+                Hide();
+            }
+            else
+            {
+                registerForm.Show();
+            }
+           
         }
 
-        private void userBtnThree_Click(object sender, EventArgs e)
+        private void passwordText_EditValueChanged(object sender, EventArgs e)
         {
-            UserSelector.SelectedUser = 3;
-            this.Close();
+            password = passwordText.Text;
         }
 
-        private void userBtnFour_Click(object sender, EventArgs e)
+        private void usernameText_EditValueChanged(object sender, EventArgs e)
         {
-            UserSelector.SelectedUser = 4;
-            this.Close();
+            username = usernameText.Text;
+        }
+
+        private void pictureEdit1_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

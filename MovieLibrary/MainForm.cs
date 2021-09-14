@@ -22,6 +22,7 @@ namespace MovieLibrary
         MovieForm movieForm;
         WatchListForm watchListForm;
         StatisticsForm statisticsForm;
+        UserForm userForm;
 
         private void favouritesBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -34,7 +35,6 @@ namespace MovieLibrary
             else
             {
                 favouritesForm.Select();
-                favouritesForm.getFavourites();
 
             }
         }
@@ -66,7 +66,6 @@ namespace MovieLibrary
             else
             {
                 watchListForm.Select();
-                watchListForm.getWatchList();
             }
             
 
@@ -98,10 +97,8 @@ namespace MovieLibrary
             else
             {
                 statisticsForm.Select();
-                statisticsForm.LoadStatistics();
             }
         }
 
-     
     }
 }

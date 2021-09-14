@@ -208,7 +208,7 @@
             this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Glow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AddFavouriteForm";
-            this.Text = "AddFavouriteForm";
+            this.Text = "Add Favourite";
             this.Load += new System.EventHandler(this.AddFavouriteForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();

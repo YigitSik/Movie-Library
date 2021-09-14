@@ -39,8 +39,10 @@ namespace MovieLibrary
 
             MovieLibraryEntities1 movieLibrary = new MovieLibraryEntities1();
 
+            //İlgili sutunları birleştir ve seç
             var elements = from x in movieLibrary.TBL_FAVOURITE
                            join y in movieLibrary.TBL_MOVIE on x.imdbId equals y.imdbId
+                           join user in movieLibrary.TBL_USER on x.userId equals user.userId
                            select new
                            {
                                y.Title,
@@ -51,17 +53,19 @@ namespace MovieLibrary
                                x.Notes,
                                x.FavId,
                                y.imdbId,
-                               y.imdbRating
+                               y.imdbRating,
+                               user.userId
                                
                            };
 
+            //mevcut kullanıcıya göre verileri filtrele
+            var favourites= elements.Where(e => e.userId == Crud.userId).Select(e => e);
 
-            gridControl1.DataSource = elements.ToList();
+            gridControl1.DataSource = favourites.ToList();
 
         }
-
-     
-
+        
+        // Seçilen tablo satırına göre verileri güncelle
         private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
             if (gridView1.GetFocusedRowCellValue("Poster")!=null)
@@ -71,7 +75,7 @@ namespace MovieLibrary
                 notesText.Text = gridView1.GetFocusedRowCellValue("Notes").ToString();
                 ratingControl1.EditValue = (decimal)gridView1.GetFocusedRowCellValue("PersonalRating");
             }
-                   
+
         }
 
 
@@ -125,12 +129,13 @@ namespace MovieLibrary
             }
             
         }
-
+        //Form seçildiğinde formu verilerini yenile
         private void FavouritesForm_Activated(object sender, EventArgs e)
         {
             getFavourites();
         }
 
+        // gridControl'deki verileri excel'e aktar
         private void excelBtn_Click(object sender, EventArgs e)
         {
             string path = "output.xlsx";

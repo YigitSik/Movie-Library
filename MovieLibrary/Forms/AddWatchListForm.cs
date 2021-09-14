@@ -59,12 +59,15 @@ namespace MovieLibrary.Forms
             textYear.Text = moviePreview.Year;
 
             MovieLibraryEntities1 movieLibrary = new MovieLibraryEntities1();
-
+            
+            // İlgili sütün verilerini birleştirerek ilgili kullanıcıya ait verileri getiriyoruz
             var elements = from watchList in movieLibrary.TBL_WATCHLIST
                            join watchListElement in movieLibrary.TBL_WATCHLIST_ELEMENT
                            on watchList.WatchListName equals watchListElement.WatchListName
                            join movie in movieLibrary.TBL_MOVIE
                            on watchListElement.imdbId equals movie.imdbId
+                           join user in movieLibrary.TBL_USER
+                           on watchList.userId equals user.userId
                            select new
                            {
                                watchListElement.WatchListName,
@@ -84,11 +87,15 @@ namespace MovieLibrary.Forms
 
         private async void watchListSubmit_Click(object sender, EventArgs e)
         {
+           
 
             if (WatchListNameText.Text.Length>0)
             {
+                watchListSubmit.Visible = false;
+
                 try
                 {
+                    // Tek seferde birçok veri aktarmak için sözlükleri kullanıyoruz
                     IDictionary<string, object> valuePairs = new Dictionary<string, object>();
                     valuePairs.Add("WatchListDate", WatchListDate);
                     valuePairs.Add("WatchListNotes", WatchListNotes);
@@ -97,10 +104,12 @@ namespace MovieLibrary.Forms
 
                    await Crud.AddWatchListElement(valuePairs) ;
                     GetWatchList();
+                    watchListSubmit.Visible = true;
                 }
                 catch (Exception exception)
                 {
                     MessageBox.Show(exception.Message);
+                    watchListSubmit.Visible = true;
                 }
                
             }
@@ -109,8 +118,7 @@ namespace MovieLibrary.Forms
                 MessageBox.Show("Watch List Name Cannot Be Empty");
             }
 
-           
-
+          
 
         }
 

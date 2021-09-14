@@ -12,20 +12,22 @@ namespace MovieLibrary
     using System;
     using System.Collections.Generic;
     
-    public partial class TBL_WATCHLIST
+    public partial class TBL_USER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TBL_WATCHLIST()
+        public TBL_USER()
         {
-            this.TBL_WATCHLIST_ELEMENT = new HashSet<TBL_WATCHLIST_ELEMENT>();
+            this.TBL_FAVOURITE = new HashSet<TBL_FAVOURITE>();
+            this.TBL_WATCHLIST = new HashSet<TBL_WATCHLIST>();
         }
     
-        public short WatchListId { get; set; }
-        public string WatchListName { get; set; }
-        public Nullable<short> userId { get; set; }
+        public short userId { get; set; }
+        public string userName { get; set; }
+        public string password { get; set; }
     
-        public virtual TBL_USER TBL_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TBL_WATCHLIST_ELEMENT> TBL_WATCHLIST_ELEMENT { get; set; }
+        public virtual ICollection<TBL_FAVOURITE> TBL_FAVOURITE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TBL_WATCHLIST> TBL_WATCHLIST { get; set; }
     }
 }

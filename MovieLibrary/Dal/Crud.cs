@@ -15,6 +15,8 @@ namespace MovieLibrary.Dal
 
         static MovieLibraryEntities1 movieEntity = new MovieLibraryEntities1();
 
+        public static short userId { get; set; }
+
         public async static void AddFavourite(IDictionary<string, object> values)
         {
 
@@ -32,6 +34,7 @@ namespace MovieLibrary.Dal
                 favs.imdbId = movie.imdbId;
                 favs.PersonalRating = rating;
                 favs.Notes = notes;
+                favs.userId = userId;
                 movieEntity.TBL_FAVOURITE.Add(favs);
                 movieEntity.SaveChanges();
 
@@ -126,9 +129,73 @@ namespace MovieLibrary.Dal
                 TBL_WATCHLIST watch = new TBL_WATCHLIST();
 
                 watch.WatchListName = name;
+                watch.userId = userId;
                 movieEntity.TBL_WATCHLIST.Add(watch);
                 movieEntity.SaveChanges();
             
+        }
+
+        public static void Register(string username,string password)
+        {
+            try
+            {
+
+                TBL_USER user = new TBL_USER();
+
+                user.userName = username;
+                user.password = password;
+                movieEntity.TBL_USER.Add(user);
+                movieEntity.SaveChanges();
+
+                MessageBox.Show("You Have Successfully Registered");
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+        }
+
+        public static IDictionary<string, object> Authenticate(string username,string password)
+        {
+
+            IDictionary<string, object> valuePairs = new Dictionary<string, object>();
+            
+
+            try
+            {
+                var user = from x in movieEntity.TBL_USER
+                           where x.userName == username && x.password == password
+                           select x;
+
+                TBL_USER element = user.FirstOrDefault();
+
+                if (element!=null)
+                {
+                    valuePairs.Add("Result", true);
+                    valuePairs.Add("UserId", element.userId);
+                    valuePairs.Add("UserName", element.userName);
+
+                    userId = element.userId;
+                }
+                else
+                {
+                    valuePairs.Add("Result", false);
+                }
+                
+                return valuePairs;
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                valuePairs.Add("Result", false);
+                return valuePairs;
+            }
+            
+
+
         }
         
     }

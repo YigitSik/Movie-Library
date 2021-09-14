@@ -59,7 +59,7 @@ namespace MovieLibrary
                 if (searchResponse.Response == "True")
                 {
                     MovieGrid.DataSource = searchResponse.Search;
-                    setImage(searchResponse.Search[0].Poster);
+                    dataGrid.MoveNext();
                 }
                 else
                 {
@@ -72,10 +72,15 @@ namespace MovieLibrary
 
         private void favouritesBtn_Click(object sender, EventArgs e)
         {
+            // Eğer seçilen form daha önce seçilmemişse veya kapatılmışsa yeniden aç
             if (selectedDataRow != null&&(addFavouriteForm==null||addFavouriteForm.IsDisposed))
             {
                 addFavouriteForm = new AddFavouriteForm(SelectedDataRow);
                 addFavouriteForm.Show();
+            } // Eğer zaten açıksa formu seç
+            else
+            {
+                addFavouriteForm.Select();
             }
         }
 
@@ -85,6 +90,10 @@ namespace MovieLibrary
             {
                 addWatchListForm = new AddWatchListForm(SelectedDataRow);
                 addWatchListForm.Show();
+            }
+            else
+            {
+                addWatchListForm.Select();
             }
            
         }
@@ -97,8 +106,13 @@ namespace MovieLibrary
                 detailsForm = new DetailsForm(SelectedDataRow.imdbID);
                 detailsForm.Show();
             }
+            else
+            {
+                detailsForm.Select();
+            }
         }
 
+        //seçilen satıra göre posteri yenile
         private void dataGrid_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
             selectedDataRow = (MoviePreview)dataGrid.GetRow(e.FocusedRowHandle);

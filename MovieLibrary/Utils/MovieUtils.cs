@@ -25,7 +25,7 @@ namespace MovieLibrary.Utils
             }
             catch (Exception)
             {
-                return Image.FromFile(@"Resources\\empty.png");
+                return Image.FromFile(@"..\..\Resources\empty.png");
 
             }
 

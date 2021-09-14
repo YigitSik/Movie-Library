@@ -18,7 +18,9 @@ namespace MovieLibrary
         public Nullable<decimal> PersonalRating { get; set; }
         public string Notes { get; set; }
         public string imdbId { get; set; }
+        public Nullable<short> userId { get; set; }
     
         public virtual TBL_MOVIE TBL_MOVIE { get; set; }
+        public virtual TBL_USER TBL_USER { get; set; }
     }
 }

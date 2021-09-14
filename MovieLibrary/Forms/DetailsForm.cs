@@ -36,6 +36,8 @@ namespace MovieLibrary
         {
             TBL_MOVIE movie;
 
+            //Burda eğer film verisi halihazırda verisetinde mevcut ise api'dan çekmek yerine veri setinden veriileri döndürüyoruz
+
             if (movieEntity.TBL_MOVIE.Find(imdbId) != null)
             {
 
@@ -45,7 +47,7 @@ namespace MovieLibrary
 
                  movie = query.FirstOrDefault();
                 
-            }
+            } // Bulamaz ise api çağrısı yapıyor
             else
             {
                  movie = await OmdbApi.GetMovieFromApi(imdbId);

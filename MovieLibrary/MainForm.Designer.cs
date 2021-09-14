@@ -35,6 +35,7 @@
             this.favouritesBtn = new DevExpress.XtraBars.BarButtonItem();
             this.watchListBtn = new DevExpress.XtraBars.BarButtonItem();
             this.statisticsBtn = new DevExpress.XtraBars.BarButtonItem();
+            this.profileBtn = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.fluentDesignFormContainer1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormContainer();
@@ -59,10 +60,11 @@
             this.homeScreenBtn,
             this.favouritesBtn,
             this.watchListBtn,
-            this.statisticsBtn});
+            this.statisticsBtn,
+            this.profileBtn});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ribbonControl1.MaxItemId = 5;
+            this.ribbonControl1.MaxItemId = 7;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsCustomizationForm.FormIcon = ((System.Drawing.Icon)(resources.GetObject("resource.FormIcon")));
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -109,6 +111,11 @@
             this.statisticsBtn.Name = "statisticsBtn";
             this.statisticsBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.statisticsBtn_ItemClick);
             // 
+            // profileBtn
+            // 
+            this.profileBtn.Id = 6;
+            this.profileBtn.Name = "profileBtn";
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -122,6 +129,7 @@
             this.ribbonPageGroup1.ItemLinks.Add(this.watchListBtn, true);
             this.ribbonPageGroup1.ItemLinks.Add(this.favouritesBtn, true);
             this.ribbonPageGroup1.ItemLinks.Add(this.statisticsBtn, true);
+            this.ribbonPageGroup1.ItemLinks.Add(this.profileBtn, true);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "ribbonPageGroup1";
             // 
@@ -161,6 +169,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Ribbon = this.ribbonControl1;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
@@ -185,5 +194,6 @@
         private DevExpress.XtraTabbedMdi.XtraTabbedMdiManager xtraTabbedMdiManager1;
         private DevExpress.XtraBars.BarButtonItem statisticsBtn;
         private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
+        private DevExpress.XtraBars.BarButtonItem profileBtn;
     }
 }

@@ -28,6 +28,7 @@ namespace MovieLibrary
         public virtual DbSet<TBL_FAVOURITE> TBL_FAVOURITE { get; set; }
         public virtual DbSet<TBL_MOVIE> TBL_MOVIE { get; set; }
         public virtual DbSet<TBL_MOVIEPREVIEW> TBL_MOVIEPREVIEW { get; set; }
+        public virtual DbSet<TBL_USER> TBL_USER { get; set; }
         public virtual DbSet<TBL_WATCHLIST> TBL_WATCHLIST { get; set; }
         public virtual DbSet<TBL_WATCHLIST_ELEMENT> TBL_WATCHLIST_ELEMENT { get; set; }
     }

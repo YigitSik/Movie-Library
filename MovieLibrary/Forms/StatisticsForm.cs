@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieLibrary.Dal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,19 +24,19 @@ namespace MovieLibrary.Forms
 
             LoadStatistics();
            
-         
         }
 
         public void LoadStatistics()
         {
 
-            ClearCharts();
-            LoadGenreData();
+            ClearCharts();        //Eski verilerin yeni gelenlerle karışmaması için tabloları temizle
+            LoadGenreData(); 
             LoadRatingsData();
             LoadLanguageData();
             LoadCountryData();
         }
 
+        //Eski verilerin yeni gelenlerle karışmaması için tabloları temizle
         private void ClearCharts()
         {
               
@@ -64,16 +65,22 @@ namespace MovieLibrary.Forms
 
         private void LoadRatingsData()
         {
+
+            // Biribiriyle ilişkili sütun verilerini ilgili kullanıcıya göre seç
             var imdbRatingsQuery = (from x in movieLibrary.TBL_FAVOURITE
                               join y in movieLibrary.TBL_MOVIE on x.imdbId equals y.imdbId
+                              join user in movieLibrary.TBL_USER on x.userId equals user.userId
+                              where user.userId ==Crud.userId
                               select y.imdbRating).ToList();
+
+
 
             List<double> imdbRatings = new List<double>();
 
             double average = 0;
             double sum = 0;
            
-
+            // Seçilen film oylarını topla
             foreach (var item in imdbRatingsQuery)
             {
                  imdbRatings.Add(Convert.ToDouble(item));
@@ -82,6 +89,7 @@ namespace MovieLibrary.Forms
 
             }
 
+            //Ortalamasını Hesapla
             double size = imdbRatings.Count;
             double count = 0;
             average =  sum / size;
@@ -95,16 +103,20 @@ namespace MovieLibrary.Forms
             
         }
 
+        // Biribiriyle ilişkili sütun verilerini ilgili kullanıcıya göre seç
         private void LoadCountryData()
         {
             var countryQuery = (from x in movieLibrary.TBL_FAVOURITE
                                  join y in movieLibrary.TBL_MOVIE on x.imdbId equals y.imdbId
-                                 select y.Country).ToList();
+                                join user in movieLibrary.TBL_USER on x.userId equals user.userId
+                                where user.userId == Crud.userId
+                                select y.Country).ToList();
 
             List<string> rawCountry = new List<string>();
 
             string[] words = new string[10];
 
+            // Sonuçların doğru çıkması ve birden fazla olan kelimeleri saymak için cümledeki her kelimeyi ayır
             foreach (var item in countryQuery)
             {
                
@@ -128,16 +140,20 @@ namespace MovieLibrary.Forms
             }
         }
 
+        // Biribiriyle ilişkili sütun verilerini ilgili kullanıcıya göre seç
         private void LoadLanguageData()
         {
             var languageQuery = (from x in movieLibrary.TBL_FAVOURITE
                                 join y in movieLibrary.TBL_MOVIE on x.imdbId equals y.imdbId
-                                select y.Language).ToList();
+                                 join user in movieLibrary.TBL_USER on x.userId equals user.userId
+                                 where user.userId == Crud.userId
+                                 select y.Language).ToList();
 
             List<string> rawlanguage = new List<string>();
 
             string[] words = new string[10];
 
+            // Sonuçların doğru çıkması ve birden fazla olan kelimeleri saymak için cümledeki her kelimeyi ayır
             foreach (var item in languageQuery)
             {
                 
@@ -161,16 +177,20 @@ namespace MovieLibrary.Forms
             }
         }
 
+        // Biribiriyle ilişkili sütun verilerini ilgili kullanıcıya göre seç
         private void LoadGenreData()
         {
             var genreQuery = (from x in movieLibrary.TBL_FAVOURITE
                               join y in movieLibrary.TBL_MOVIE on x.imdbId equals y.imdbId
+                              join user in movieLibrary.TBL_USER on x.userId equals user.userId
+                              where user.userId == Crud.userId
                               select y.Genre).ToList();
 
             List<string> rawGenres = new List<string>();
 
             string[] words = new string[10];
 
+            // Sonuçların doğru çıkması ve birden fazla olan kelimeleri saymak için cümledeki her kelimeyi ayır
             foreach (var item in genreQuery)
             {
                 
@@ -194,6 +214,7 @@ namespace MovieLibrary.Forms
             }
         }
 
+        //Form seçildiğinde verileri tekrar güncelle
         private void StatisticsForm_Activated(object sender, EventArgs e)
         {
             LoadStatistics();

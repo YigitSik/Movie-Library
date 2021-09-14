@@ -38,7 +38,7 @@ namespace MovieLibrary.Forms
         public async Task Search(string movieName, string year)
         {
 
-
+            //Burada api'ın yeni sürümünden kaynaklanan bir uyum sorunu giderilmiştir.
             var appName = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe";
 
             using (var Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true))
@@ -50,13 +50,13 @@ namespace MovieLibrary.Forms
                 ApplicationName = this.GetType().ToString()
             });
 
-
-
+            //Anahtar Kelimeye Göre Youtube Araması Gerçekleştirilmektedir
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = $"{movieName} {year} Official Trailer"; // Replace with your search term.
+            searchListRequest.Q = $"{movieName} {year} Official Trailer"; 
+
+            //Sadece bir video'ya ihtiyacımız var
             searchListRequest.MaxResults = 1;
 
-            // Call the search.list method to retrieve results matching the specified query term.
             var searchListResponse = await searchListRequest.ExecuteAsync();
 
             List<string> videos = new List<string>();
@@ -65,14 +65,12 @@ namespace MovieLibrary.Forms
 
             string v = "";
 
-            // Add each result to the appropriate list, and then display the lists of
-            // matching videos, channels, and playlists.
+            
             foreach (var searchResult in searchListResponse.Items)
             {
                 switch (searchResult.Id.Kind)
                 {
                     case "youtube#video":
-                        //   videos.Add(String.Format("{0} ({1})", searchResult.Snippet.Title, searchResult.Id.VideoId));
                         videos.Add(searchResult.Id.VideoId);
                         break;
 
@@ -86,9 +84,11 @@ namespace MovieLibrary.Forms
                 }
             }
 
+            //url'i parametre olarak aktarıyoruz
             v = videos[0];
             string navigateUrl = $@"https://www.youtube.com/embed/{v}";
 
+            //web browser componentini belirtilen adrese gönderiyoruz
             webBrowser1.Navigate(navigateUrl);
 
         }

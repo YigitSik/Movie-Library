@@ -45,8 +45,7 @@ namespace MovieLibrary.Forms
             InitializeComponent();
             this.moviePreview = moviePreview;
         }
-
-       
+        
         private void AddFavouriteForm_Load(object sender, EventArgs e)
         {
             pictureBoxFav.Image = MovieUtils.getImage(moviePreview.Poster);
