@@ -18,7 +18,6 @@ namespace MovieLibrary.Forms
             InitializeComponent();
         }
 
-        UserForm userForm;
 
         public string username { get; set; }
 
@@ -40,6 +39,7 @@ namespace MovieLibrary.Forms
                 UserForm userForm = new UserForm();
                 userForm.Show();
             }
+
             
         }
 

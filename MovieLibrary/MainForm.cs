@@ -22,7 +22,6 @@ namespace MovieLibrary
         MovieForm movieForm;
         WatchListForm watchListForm;
         StatisticsForm statisticsForm;
-        UserForm userForm;
 
         private void favouritesBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {

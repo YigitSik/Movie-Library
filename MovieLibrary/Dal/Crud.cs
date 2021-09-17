@@ -135,67 +135,120 @@ namespace MovieLibrary.Dal
             
         }
 
+        //Burada kullanıcı bulut veri tabanıyla ilk etkileşimini gerçekleştiriyor.
+        //Azure SQL trafiği az olan server ları uyku moduna geçiriyor buda ilk bağlanılmaya çalışıldığında hataya sebep oluyor
+        //Bu işlem genellikle sadece ilk 1 dakika içinde gerçekleşiyor. 
+        //Buradaki kod ile de bu işemi birkaç kez deneyerek, programı geçiçi hatalara karşı esnek bir hale getiriyoruz
         public static void Register(string username,string password)
         {
 
+            int totalNumberOfTimesToTry = 4;
+            int retryIntervalSeconds = 10;
 
-            try
+            for (int tries = 1; tries <= totalNumberOfTimesToTry; tries++)
             {
 
-                TBL_USER user = new TBL_USER();
+                try
+                {
 
-                user.userName = username;
-                user.password = password;
-                movieEntity.TBL_USER.Add(user);
-                movieEntity.SaveChanges();
+                    if (tries > 1)
+                    {
+                        Console.WriteLine
+                          ("Transient error encountered. Will begin attempt number {0} of {1} max...",
+                          tries, totalNumberOfTimesToTry
+                          );
+                        System.Threading.Thread.Sleep(1000 * retryIntervalSeconds);
+                        retryIntervalSeconds = Convert.ToInt32
+                          (retryIntervalSeconds * 1.5);
+                        
+                    }
+                    TBL_USER user = new TBL_USER();
 
-                MessageBox.Show("You Have Successfully Registered");
+                    user.userName = username;
+                    user.password = password;
+                    movieEntity.TBL_USER.Add(user);
+                    movieEntity.SaveChanges();
+
+                    MessageBox.Show("You Have Successfully Registered");
+                    break;
+
+                }
+                catch (Exception )
+                {
+                    string message = String.Format("Transient error encountered. Will begin attempt number {0} of {1} max...", tries, totalNumberOfTimesToTry);
+                    MessageBox.Show(message);
+                   
+                }
 
             }
-            catch (Exception e)
-            {
-                MessageBox.Show("A Transient Error Has Occurred, Please Try Again In 15 seconds!");
-            }
+
         }
 
+        //Burada kullanıcı bulut veri tabanıyla ilk etkileşimini gerçekleştiriyor.
+        //Azure SQL trafiği az olan server ları uyku moduna geçiriyor buda ilk bağlanılmaya çalışıldığında hataya sebep oluyor
+        //Bu işlem genellikle sadece ilk 1 dakika içinde gerçekleşiyor. 
+        //Buradaki kod ile de bu işemi birkaç kez deneyerek, programı geçiçi hatalara karşı esnek bir hale getiriyoruz
         public static IDictionary<string, object> Authenticate(string username,string password)
         {
 
-
             IDictionary<string, object> valuePairs = new Dictionary<string, object>();
-            
 
-            try
+
+            int totalNumberOfTimesToTry = 4;
+            int retryIntervalSeconds = 10;
+
+            for (int tries = 1; tries <= totalNumberOfTimesToTry; tries++)
             {
-                var user = from x in movieEntity.TBL_USER
-                           where x.userName == username && x.password == password
-                           select x;
 
-                TBL_USER element = user.FirstOrDefault();
 
-                if (element!=null)
+                try
                 {
-                    valuePairs.Add("Result", true);
-                    valuePairs.Add("UserId", element.userId);
-                    valuePairs.Add("UserName", element.userName);
 
-                    userId = element.userId;
-                }
-                else
-                {
-                    valuePairs.Add("Result", false);
-                }
+                    if (tries > 1)
+                    {
+                        Console.WriteLine
+                          ("Transient error encountered. Will begin attempt number {0} of {1} max...",
+                          tries, totalNumberOfTimesToTry
+                          );
+                        System.Threading.Thread.Sleep(1000 * retryIntervalSeconds);
+                        retryIntervalSeconds = Convert.ToInt32
+                          (retryIntervalSeconds * 1.5);
+                    }
                 
-                return valuePairs;
+     
+                    var user = from x in movieEntity.TBL_USER
+                               where x.userName == username && x.password == password
+                               select x;
+
+                    TBL_USER element = user.FirstOrDefault();
+
+                    if (element != null)
+                    {
+                        valuePairs.Add("Result", true);
+                        valuePairs.Add("UserId", element.userId);
+                        valuePairs.Add("UserName", element.userName);
+
+                        userId = element.userId;
+                    }
+                    else
+                    {
+                        valuePairs.Add("Result", false);
+                    }
+                    return valuePairs;
+
+                    
+                }
+                catch (Exception)
+                {
+                    string message = String.Format("Transient error encountered. Will begin attempt number {0} of {1} max...", tries, totalNumberOfTimesToTry);
+                    MessageBox.Show(message);
+                }
+
+                
 
             }
-            catch (Exception e)
-            {
-                MessageBox.Show("A Transient Error Has Occurred, Please Try Again In 15 seconds!");
-                return valuePairs;
-            }
-            
 
+            return valuePairs;
 
         }
 
